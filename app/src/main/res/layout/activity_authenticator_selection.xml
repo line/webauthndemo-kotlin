@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.view.AuthenticatorSelectionActivity">
+
+    <Button
+        android:id="@+id/btn_biometric"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Use Biometric"
+        android:gravity="start|center_vertical"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <Button
+        android:id="@+id/btn_device_credential"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Use Device Credential"
+        android:gravity="start|center_vertical"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        app:layout_constraintTop_toBottomOf="@id/btn_biometric"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

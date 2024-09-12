@@ -1,0 +1,15 @@
+*.iml
+.gradle
+.idea
+.DS_Store
+build
+captures
+.externalNativeBuild
+.cxx
+local.properties
+app/release
+app/debug
+keystore.properties
+keystore.jks
+.gitmodules
+webauthn-kotlin

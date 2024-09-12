@@ -1,0 +1,130 @@
+/*
+ * Copyright 2024 LY Corporation
+ *
+ * LY Corporation licenses this file to you under the Apache License,
+ * version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at:
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+plugins {
+    id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "org.jlleitschuh.gradle.ktlint" version "12.0.3"
+}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+android {
+    namespace "com.lycorp.webauthn.sample"
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.lycorp.webauthn.sample"
+        minSdk 28
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "com.lycorp.webauthn.sample.CustomTestRunner"
+    }
+    signingConfigs {
+        release {
+            def keystorePropertiesFile = rootProject.file("keystore.properties")
+            if (keystorePropertiesFile.exists()) {
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+                storeFile file(keystoreProperties["storeFile"])
+                storePassword keystoreProperties["storePassword"]
+                keyAlias keystoreProperties["keyAlias"]
+                keyPassword keystoreProperties["keyPassword"]
+            } else {
+                println("Warning: keystore.properties file not found. Release build will not work.")
+            }
+        }
+        debug {
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KaptGenerateStubs).configureEach{kotlinOptions{jvmTarget = "11"}}
+
+kotlin {
+    jvmToolchain(11)
+}
+
+kapt {
+    correctErrorTypes true
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:1.10.1"
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "com.google.android.material:material:1.9.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "com.google.code.gson:gson:2.10"
+    implementation "org.bouncycastle:bcprov-jdk15on:1.67"
+
+    testImplementation "junit:junit:4.13.2"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+    implementation "io.reactivex.rxjava3:rxjava:3.1.5"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.10.0"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.1"
+    implementation "androidx.fragment:fragment-ktx:1.6.0"
+
+    // coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0"
+
+    // Room
+    implementation "androidx.room:room-runtime:2.5.2"
+    kapt "androidx.room:room-compiler:2.5.2"
+    implementation "androidx.room:room-ktx:2.5.2"
+    androidTestImplementation "androidx.room:room-testing:2.5.2"
+
+    implementation group: "com.lycorp.webauthn", name: "webauthn-kotlin", version: "1.0.0"
+}
