@@ -14,16 +14,16 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.data.remote.api
+package jp.co.lycorp.webauthn.sample.data.remote.api
 
-import com.lycorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeInput
-import com.lycorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeResult
-import com.lycorp.webauthn.sample.data.remote.model.GetRegistrationChallengeInput
-import com.lycorp.webauthn.sample.data.remote.model.GetRegistrationChallengeResult
-import com.lycorp.webauthn.sample.data.remote.model.SendAuthenticationResponseInput
-import com.lycorp.webauthn.sample.data.remote.model.SendRegistrationResponseInput
-import com.lycorp.webauthn.sample.data.remote.model.SendResponseResult
-import com.lycorp.webauthn.sample.domain.remote.Fido2Api
+import jp.co.lycorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeInput
+import jp.co.lycorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeResult
+import jp.co.lycorp.webauthn.sample.data.remote.model.GetRegistrationChallengeInput
+import jp.co.lycorp.webauthn.sample.data.remote.model.GetRegistrationChallengeResult
+import jp.co.lycorp.webauthn.sample.data.remote.model.SendAuthenticationResponseInput
+import jp.co.lycorp.webauthn.sample.data.remote.model.SendRegistrationResponseInput
+import jp.co.lycorp.webauthn.sample.data.remote.model.SendResponseResult
+import jp.co.lycorp.webauthn.sample.domain.remote.Fido2Api
 import retrofit2.http.Body
 import retrofit2.http.POST
 

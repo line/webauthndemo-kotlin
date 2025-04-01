@@ -14,12 +14,12 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.presentation.viewmodel
+package jp.co.lycorp.webauthn.sample.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.lycorp.webauthn.model.Fido2PromptInfo
-import com.lycorp.webauthn.publickeycredential.PublicKeyCredential
+import jp.co.lycorp.webauthn.model.Fido2PromptInfo
+import jp.co.lycorp.webauthn.publickeycredential.PublicKeyCredential
 
 class Fido2ViewModelFactory(
     private val publicKeyCredential: PublicKeyCredential,

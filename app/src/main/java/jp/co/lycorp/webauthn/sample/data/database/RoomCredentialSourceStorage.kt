@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.data.database
+package jp.co.lycorp.webauthn.sample.data.database
 
 import android.content.Context
 import androidx.room.Dao
@@ -26,9 +26,9 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.lycorp.webauthn.db.CredentialSourceStorage
-import com.lycorp.webauthn.model.PublicKeyCredentialSource
-import com.lycorp.webauthn.model.PublicKeyCredentialType
+import jp.co.lycorp.webauthn.db.CredentialSourceStorage
+import jp.co.lycorp.webauthn.model.PublicKeyCredentialSource
+import jp.co.lycorp.webauthn.model.PublicKeyCredentialType
 import java.util.UUID
 
 @Database(
@@ -70,18 +70,23 @@ internal abstract class RoomCredentialSourceStorage : RoomDatabase(), Credential
         )
     }
 
-    override fun loadAll(): List<PublicKeyCredentialSource> {
+    override fun loadAll(aaguid: UUID?): List<PublicKeyCredentialSource> {
         val credSourceEntityList: List<PubKeyCredSourceEntity> =
             credDao().selectCredentialSources()
-        return credSourceEntityList.map { entity ->
-            PublicKeyCredentialSource(
-                type = entity.credType,
-                id = entity.credId,
-                rpId = entity.rpId,
-                userHandle = entity.userHandle,
-                aaguid = entity.aaguid,
-            )
-        }
+
+        return credSourceEntityList
+            .filter { entity ->
+                aaguid == null || entity.aaguid == aaguid
+            }
+            .map { entity ->
+                PublicKeyCredentialSource(
+                    type = entity.credType,
+                    id = entity.credId,
+                    rpId = entity.rpId,
+                    userHandle = entity.userHandle,
+                    aaguid = entity.aaguid,
+                )
+            }
     }
 
     override fun load(credId: String): PublicKeyCredentialSource? {

@@ -11,5 +11,6 @@ app/release
 app/debug
 keystore.properties
 keystore.jks
+webauthndemo_release_key.jks
 .gitmodules
 webauthn-kotlin
