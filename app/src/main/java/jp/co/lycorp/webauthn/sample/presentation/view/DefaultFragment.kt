@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.presentation.view
+package jp.co.lycorp.webauthn.sample.presentation.view
 
 import android.content.Context
 import androidx.fragment.app.Fragment

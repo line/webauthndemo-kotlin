@@ -14,24 +14,20 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.presentation.view
+package jp.co.lycorp.webauthn.sample.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import androidx.databinding.DataBindingUtil
+import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.lycorp.webauthn.sample.R
-import com.lycorp.webauthn.sample.databinding.FragmentSignInBinding
-import com.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
+import jp.co.lycorp.webauthn.sample.R
+import jp.co.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
 
 class SignInFragment : Fragment() {
-    private var _binding: FragmentSignInBinding? = null
-    private val binding get() = _binding!!
-
     private val viewModel: Fido2ViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -39,25 +35,17 @@ class SignInFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_sign_in, container, false)
+        val radioGroup = rootView.findViewById<RadioGroup>(R.id.rgUserVerification)
+        setupRadioGroupListener(radioGroup)
 
-        setupRadioGroupListener()
-
-        return binding.apply {
-            viewModel = this@SignInFragment.viewModel
-            lifecycleOwner = viewLifecycleOwner
-        }.root
+        return rootView
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    private fun setupRadioGroupListener(radioGroup: RadioGroup) {
+        radioGroup.check(R.id.rgUserVerificationOption1)
 
-    private fun setupRadioGroupListener() {
-        binding.rgUserVerification.check(R.id.rgUserVerificationOption1)
-
-        binding.rgUserVerification.setOnCheckedChangeListener { group, checkedId ->
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val selectedRadioButton = group.findViewById<RadioButton>(checkedId)
             val selectedText = selectedRadioButton?.text.toString()
 

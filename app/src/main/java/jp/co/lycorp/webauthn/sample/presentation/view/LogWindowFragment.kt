@@ -14,27 +14,25 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.presentation.view
+package jp.co.lycorp.webauthn.sample.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.lycorp.webauthn.sample.R
-import com.lycorp.webauthn.sample.databinding.FragmentLogWindowBinding
-import com.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
+import jp.co.lycorp.webauthn.sample.R
+import jp.co.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
 import kotlinx.coroutines.launch
 
 class LogWindowFragment : Fragment() {
-    private var _binding: FragmentLogWindowBinding? = null
-    private val binding get() = _binding!!
-
     private val viewModel: Fido2ViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -42,20 +40,23 @@ class LogWindowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentLogWindowBinding.inflate(inflater, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_log_window, container, false)
 
-        binding.logWindowClearButton.setOnClickListener {
+        val logWindowClearButton: Button = rootView.findViewById(R.id.logWindowClearButton)
+        val logWindowXButton: Button = rootView.findViewById(R.id.logWindowXButton)
+
+        logWindowClearButton.setOnClickListener {
             viewModel.clearMessage()
         }
 
-        binding.logWindowXButton.setOnClickListener {
+        logWindowXButton.setOnClickListener {
             parentFragmentManager.beginTransaction().remove(this@LogWindowFragment).commit()
             activity?.findViewById<FrameLayout>(R.id.logWindowContainer)?.visibility = View.GONE
             activity?.findViewById<View>(R.id.logWindowOpenButton)?.visibility = View.VISIBLE
             activity?.findViewById<View>(R.id.logWindowCloseButton)?.visibility = View.GONE
         }
 
-        return binding.root
+        return rootView
     }
 
     override fun onViewCreated(
@@ -64,17 +65,14 @@ class LogWindowFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        val tvMessage: TextView = view.findViewById(R.id.tv_message)
+
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.messageStateFlow.collect { message ->
-                    binding.tvMessage.text = message
+                    tvMessage.text = message
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

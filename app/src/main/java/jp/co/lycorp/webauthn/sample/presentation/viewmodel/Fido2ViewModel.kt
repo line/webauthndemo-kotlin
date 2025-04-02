@@ -14,20 +14,21 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.presentation.viewmodel
+package jp.co.lycorp.webauthn.sample.presentation.viewmodel
 
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.lycorp.webauthn.exceptions.WebAuthnException
-import com.lycorp.webauthn.model.AttestationConveyancePreference
-import com.lycorp.webauthn.model.AuthenticatorSelectionCriteria
-import com.lycorp.webauthn.model.Fido2PromptInfo
-import com.lycorp.webauthn.model.UserVerificationRequirement
-import com.lycorp.webauthn.publickeycredential.PublicKeyCredential
-import com.lycorp.webauthn.rp.AuthenticationOptions
-import com.lycorp.webauthn.rp.RegistrationOptions
+import jp.co.lycorp.webauthn.exceptions.WebAuthnException
+import jp.co.lycorp.webauthn.model.AttestationConveyancePreference
+import jp.co.lycorp.webauthn.model.AuthenticatorSelectionCriteria
+import jp.co.lycorp.webauthn.model.Fido2PromptInfo
+import jp.co.lycorp.webauthn.model.UserVerificationRequirement
+import jp.co.lycorp.webauthn.publickeycredential.PublicKeyCredential
+import jp.co.lycorp.webauthn.rp.AuthenticationOptions
+import jp.co.lycorp.webauthn.rp.RegistrationOptions
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -104,7 +105,7 @@ class Fido2ViewModel(
                 }
         }
 
-    fun signUp() =
+    fun signUp(activity: FragmentActivity) =
         viewModelScope.launch(Dispatchers.Default + exceptionHandler) {
             var username = name.value
             if (username.isEmpty()) {
@@ -130,6 +131,7 @@ class Fido2ViewModel(
                 )
             val result =
                 publicKeyCredential.create(
+                    activity = activity,
                     options = registrationOptions,
                     fido2PromptInfo = fido2PromptInfo,
                 )
@@ -172,7 +174,7 @@ class Fido2ViewModel(
             }
         }
 
-    fun signIn() =
+    fun signIn(activity: FragmentActivity) =
         viewModelScope.launch(Dispatchers.Default + exceptionHandler) {
             var username = name.value
             if (username.isEmpty()) {
@@ -186,6 +188,7 @@ class Fido2ViewModel(
                 )
             val result =
                 publicKeyCredential.get(
+                    activity = activity,
                     options = authenticationOptions,
                     fido2PromptInfo = fido2PromptInfo,
                 )

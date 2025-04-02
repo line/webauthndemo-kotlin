@@ -14,28 +14,38 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.presentation.view
+package jp.co.lycorp.webauthn.sample.presentation.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.lycorp.webauthn.sample.R
+import jp.co.lycorp.webauthn.sample.R
 
 class AuthenticatorSelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authenticator_selection)
 
-        val biometricButton: Button = findViewById(R.id.btn_biometric)
-        val deviceCredentialButton: Button = findViewById(R.id.btn_device_credential)
+        val biometricNoneButton: Button = findViewById(R.id.btn_biometric_none)
+        val biometricAndroidKeyButton: Button = findViewById(R.id.btn_biometric_androidkey)
+        val deviceCredentialNoneButton: Button = findViewById(R.id.btn_device_credential_none)
+        val deviceCredentialAndroidKeyButton: Button = findViewById(R.id.btn_device_credential_androidkey)
 
-        biometricButton.setOnClickListener {
-            navigateToMainScreen("biometric")
+        biometricNoneButton.setOnClickListener {
+            navigateToMainScreen("biometric_none")
         }
 
-        deviceCredentialButton.setOnClickListener {
-            navigateToMainScreen("device_credential")
+        biometricAndroidKeyButton.setOnClickListener {
+            navigateToMainScreen("biometric_androidkey")
+        }
+
+        deviceCredentialNoneButton.setOnClickListener {
+            navigateToMainScreen("device_credential_none")
+        }
+
+        deviceCredentialAndroidKeyButton.setOnClickListener {
+            navigateToMainScreen("device_credential_androidkey")
         }
     }
 

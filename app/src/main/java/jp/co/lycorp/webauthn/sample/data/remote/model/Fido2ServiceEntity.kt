@@ -14,13 +14,13 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.data.remote.model
+package jp.co.lycorp.webauthn.sample.data.remote.model
 
-import com.lycorp.webauthn.model.AuthenticatorSelectionCriteria
-import com.lycorp.webauthn.model.ClientExtensionInput
-import com.lycorp.webauthn.model.ClientExtensionsOutput
-import com.lycorp.webauthn.model.CredentialProtection
-import com.lycorp.webauthn.model.PublicKeyCredentialDescriptor
+import jp.co.lycorp.webauthn.model.AuthenticatorSelectionCriteria
+import jp.co.lycorp.webauthn.model.ClientExtensionInput
+import jp.co.lycorp.webauthn.model.ClientExtensionsOutput
+import jp.co.lycorp.webauthn.model.CredentialProtection
+import jp.co.lycorp.webauthn.model.PublicKeyCredentialDescriptor
 
 // assertion/request
 data class GetAuthenticationChallengeInput(

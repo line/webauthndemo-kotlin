@@ -14,8 +14,12 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample
+package jp.co.lycorp.webauthn.sample.presentation.view
 
-import android.app.Application
+interface FragmentInteractionListener {
+    fun updateButtonAreaForDefault()
 
-class WebauthnKotlinApp : Application()
+    fun updateButtonAreaForSignUp()
+
+    fun updateButtonAreaForSignIn()
+}

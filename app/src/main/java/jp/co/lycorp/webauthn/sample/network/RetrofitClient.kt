@@ -14,9 +14,9 @@
  * under the License.
  */
 
-package com.lycorp.webauthn.sample.network
+package jp.co.lycorp.webauthn.sample.network
 
-import com.lycorp.webauthn.sample.data.remote.api.RetrofitFido2Api
+import jp.co.lycorp.webauthn.sample.data.remote.api.RetrofitFido2Api
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
