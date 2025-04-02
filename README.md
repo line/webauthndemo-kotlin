@@ -54,7 +54,7 @@ Or you can use the command line:
 
 ```bash
 $ ./gradlew publishToMavenLocal
-```   
+```
 
 ### 4. Launch a WebAuthn server.
 
@@ -69,30 +69,31 @@ When setting up the server, you need to register the `origin` for your Android a
 To obtain the `facet ID` in `debug` mode, use the following command:
 
 ```sh
-keytool -exportcert \-alias androiddebugkey \  
+keytool -exportcert \
+-alias androiddebugkey \
 -keystore $HOME/.android/debug.keystore \  
--rfc | \ 
+-rfc | \
 openssl x509 -inform PEM -outform DER | \ 
 openssl dgst -sha256 -binary | \ 
 openssl base64 | \ 
 tr -d '=' | \ 
 tr -d '\n'
-```  
+```
 
 ##### Release Mode
 
 To obtain the facet ID in release mode, you need to replace the alias and keystore with your release key alias and keystore file. Use the following command:
 ```sh 
 keytool -exportcert \
--alias your_release_key_alias \ 
+-alias your_release_key_alias \
 -keystore path/to/path_of_your-release-key.jks \ 
--rfc | \ 
+-rfc | \
 openssl x509 -inform PEM -outform DER | \ 
-openssl dgst -sha256 -binary | \ 
-openssl base64 | \ 
+openssl dgst -sha256 -binary | \
+openssl base64 | \
 tr -d '=' | \
 tr -d '\n'
-```   
+```
 
 For instructions on creating `keystore.jks` / `keystore.properties` for release mode, please refer to the [Additional configuration](#additional-configuration) section below.
 
@@ -103,7 +104,7 @@ For instructions on creating `keystore.jks` / `keystore.properties` for release 
 3. Replace the domain `"https://example.com"` with the server domain you want to test.
 
 ```kotlin
-private val BASE_URL_FIDO2 = "https://example.com"  <-  replace here   
+private val BASE_URL_FIDO2 = "https://example.com"  <-  replace here
 ```
 
 ### 6. Install and run the application on your android device:
@@ -114,7 +115,7 @@ private val BASE_URL_FIDO2 = "https://example.com"  <-  replace here
 ## Additional Configuration
 ### 1. Create `keystore.jks` and set up `keystore.properties` for release
 
-To sign your application for release, you need to create a `keystore.jks` file and set up a `keystore.properties` file.    
+To sign your application for release, you need to create a `keystore.jks` file and set up a `keystore.properties` file.
 This step is optional and only necessary if you are planning to release your application.
 
 #### 1-1. Create `keystore.jks` file.
@@ -129,7 +130,7 @@ Or, Use the `keytool` command to create a new keystore file. Open a terminal and
 
 ```bash
 keytool -genkeypair -v -keystore my-release-key.jks -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
-``` 
+```
 
 #### 1-2. Create `keystore.properties` file:
 Create a new file named `keystore.properties` in the root directory of the project.
@@ -169,7 +170,7 @@ These features collectively showcase the capabilities of the WebAuthn Kotlin SDK
 
 ### Biometric Authenticator
 
-<img src="./images/Biometric.gif" width="300" align="center" alt="biometric"/>    
+<img src="./images/Biometric.gif" width="300" align="center" alt="biometric"/> 
 
 ### Device Credential Authenticator
 
