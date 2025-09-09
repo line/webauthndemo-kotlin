@@ -12,11 +12,21 @@ Welcome to the WebAuthnDemo Kotlin! This sample application demonstrates how to 
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
+### Development Environment
+- **Java**: 21 (for building)
+- **Android Studio**: Ladybug (2024.2.1) or later
+- **Android SDK**: API level 35
 
-- Gradle = 7.4.2
-- Android Gradle = 7.6.4
-- Android API level >= 28
+### Build System
+- **Gradle**: 9.0.0
+- **Android Gradle Plugin**: 8.12.1
+- **Kotlin**: 2.2.10
+
+### Runtime Requirements
+- **Android Device**: API level 28 (Android 9.0 Pie) or higher
+- **Target SDK**: 35 (Android 15)
+
+**Note**: The demo app is built with Java 21 for optimal performance but generates Java 11-compatible bytecode for maximum Android compatibility.
 
 ## Getting Started
 
@@ -32,10 +42,22 @@ $ git clone https://github.com/line/webauthndemo-kotlin.git
 $ git clone https://github.com/line/webauthn-kotlin.git   
 ```   
 
-### 2. Build the SDK using Gradle to create AAR file:
+### 2. Set up Java 21 Environment:
+
+Ensure Java 21 is installed and configured:
+
+```bash
+# Check Java version
+java -version
+
+# Ensure JAVA_HOME is set to Java 21
+echo $JAVA_HOME
+```
+
+### 3. Build the SDK using Gradle to create AAR file:
 
 1. Open `webauthn-kotlin` in Android Studio.
-2. Open `Run Anything` (Double `Ctrl`) or Gradle - Execute Gradle Task.
+2. Configure **Gradle JVM** to use Java 21 in Preferences → Build, Execution, Deployment → Build Tools → Gradle
 3. Run `gradle assembleRelease` task.
 
 Or you can use the command line:
@@ -45,10 +67,9 @@ $ cd webauthn-kotlin
 $ ./gradlew assembleRelease
 ```
 
-### 3. Publish the AAR file to the local Maven repository:
+### 4. Publish the AAR file to the local Maven repository:
 
-1. Open `Run Anything` (Double `Ctrl`) or Gradle - Execute Gradle Task.
-2. Run `gradle publishToMavenLocal` task.
+1. Run `gradle publishToMavenLocal` task in Android Studio.
 
 Or you can use the command line:
 
@@ -56,7 +77,7 @@ Or you can use the command line:
 $ ./gradlew publishToMavenLocal
 ```
 
-### 4. Launch a WebAuthn server.
+### 5. Launch a WebAuthn server.
 
 We use the FIDO2 server [here](https://github.com/line/line-fido2-server) to run the sample application. Please refer to the [README](https://github.com/line/line-fido2-server/blob/main/README.md#how-to-run) for instructions on how to run the server.
 
@@ -97,20 +118,27 @@ tr -d '\n'
 
 For instructions on creating `keystore.jks` / `keystore.properties` for release mode, please refer to the [Additional configuration](#additional-configuration) section below.
 
-### 5. Change the domain of relying party in [`RetrofitClient.kt`](./app/src/main/java/jp/co/lycorp/webauthn/sample/network/RetrofitClient.kt).
+### 6. Change the domain of relying party in [`RetrofitClient.kt`](./app/src/main/java/jp/co/lycorp/webauthn/sample/network/RetrofitClient.kt).
 
 1. Open `webauthndemo-kotlin` in Android Studio.
-2. Open [`RetrofitClient.kt`](./app/src/main/java/jp/co/lycorp/webauthn/sample/network/RetrofitClient.kt) file.
-3. Replace the domain `"https://example.com"` with the server domain you want to test.
+2. Configure **Gradle JVM** to use Java 21 in Preferences → Build, Execution, Deployment → Build Tools → Gradle
+3. Open [`RetrofitClient.kt`](./app/src/main/java/jp/co/lycorp/webauthn/sample/network/RetrofitClient.kt) file.
+4. Replace the domain `"https://example.com"` with the server domain you want to test.
 
 ```kotlin
 private val BASE_URL_FIDO2 = "https://example.com"  <-  replace here
 ```
 
-### 6. Install and run the application on your android device:
+### 7. Install and run the application on your android device:
 
 1. From the top menu, select `File` > `Sync Project with Gradle Files`.
 2. Connect your Android device to your computer and run the application.
+
+### IDE Setup Notes
+For Android Studio users:
+- **Gradle JVM**: Set to Java 21 in Preferences → Build, Execution, Deployment → Build Tools → Gradle
+- **Project Structure**: Use Project SDK Android API 35, Language Level 11
+- **Device Requirements**: Android device with API level 28+ for testing
 
 ## Additional Configuration
 ### 1. Create `keystore.jks` and set up `keystore.properties` for release
