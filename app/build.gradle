@@ -15,24 +15,22 @@
  */
 
 plugins {
-    id 'com.android.application' version '7.4.2'
-    id 'org.jetbrains.kotlin.android' version '2.0.21'
-    id "com.google.devtools.ksp" version "2.0.21-1.0.28"
-    id "org.jlleitschuh.gradle.ktlint" version "12.0.3"
+    id 'com.android.application' version '8.12.2'
+    id 'org.jetbrains.kotlin.android' version '2.2.10'
+    id "com.google.devtools.ksp" version "2.2.10-2.0.2"
+    id "org.jlleitschuh.gradle.ktlint" version "13.1.0"
 }
 
-kotlin {
-    jvmToolchain(11)
-}
+// Removed jvmToolchain to use system Java while maintaining Java 11 compatibility
 
 android {
     namespace "jp.co.lycorp.webauthn.sample"
-    compileSdk 34
+    compileSdkVersion project.compileSdkVersion.toInteger()
 
     defaultConfig {
         applicationId "jp.co.lycorp.webauthn.sample"
-        minSdk 28
-        targetSdk 33
+        minSdk project.minSdkVersion.toInteger()
+        targetSdk project.targetSdkVersion.toInteger()
         versionCode 1
         versionName "1.0"
 
@@ -76,16 +74,16 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:1.10.0"
-    implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "com.google.android.material:material:1.9.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
-    implementation "com.google.code.gson:gson:2.10.0"
+    implementation "androidx.core:core-ktx:$project.coreVersion"
+    implementation "androidx.appcompat:appcompat:$project.appcompatVersion"
+    implementation "com.google.android.material:material:$project.materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$project.constraintLayoutVersion"
+    implementation "com.google.code.gson:gson:$project.gsonVersion"
     implementation "org.bouncycastle:bcprov-jdk15on:1.67"
 
-    testImplementation "junit:junit:4.13.2"
-    androidTestImplementation "androidx.test.ext:junit:1.1.5"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.5.1"
+    testImplementation "junit:junit:$project.junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$project.testExtJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$project.espressoVersion"
 
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
@@ -94,20 +92,20 @@ dependencies {
     implementation "io.reactivex.rxjava3:rxjava:3.1.5"
     implementation "com.squareup.okhttp3:okhttp-urlconnection:4.10.0"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-cbor:1.4.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:1.4.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$project.kotlinxSerializationVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-cbor:$project.kotlinxSerializationVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-core:$project.kotlinxSerializationVersion"
     implementation "androidx.fragment:fragment-ktx:1.6.0"
 
     // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$project.kotlinxCoroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$project.kotlinxCoroutinesVersion"
 
     // Room
-    implementation "androidx.room:room-runtime:2.5.2"
-    ksp "androidx.room:room-compiler:2.5.2"
-    implementation "androidx.room:room-ktx:2.5.2"
-    androidTestImplementation "androidx.room:room-testing:2.6.1"
+    implementation "androidx.room:room-runtime:$project.roomVersion"
+    ksp "androidx.room:room-compiler:$project.roomVersion"
+    implementation "androidx.room:room-ktx:$project.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$project.roomVersion"
 
     implementation group: "jp.co.lycorp.webauthn", name: "webauthn-kotlin", version: "1.1.0"
 }
