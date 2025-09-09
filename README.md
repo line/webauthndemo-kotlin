@@ -14,7 +14,7 @@ Welcome to the WebAuthnDemo Kotlin! This sample application demonstrates how to 
 
 ### Development Environment
 - **Java**: 21 (for building)
-- **Android Studio**: Ladybug (2024.2.1) or later
+- **Android Studio**: Narwhal 3 (2025.1.3) or later
 - **Android SDK**: API level 35
 
 ### Build System
