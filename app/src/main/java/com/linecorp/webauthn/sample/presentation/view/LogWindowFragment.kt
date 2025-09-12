@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.presentation.view
+package com.linecorp.webauthn.sample.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,8 +28,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import jp.co.lycorp.webauthn.sample.R
-import jp.co.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
+import com.linecorp.webauthn.sample.R
+import com.linecorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
 import kotlinx.coroutines.launch
 
 class LogWindowFragment : Fragment() {

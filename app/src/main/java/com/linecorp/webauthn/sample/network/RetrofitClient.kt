@@ -14,9 +14,9 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.network
+package com.linecorp.webauthn.sample.network
 
-import jp.co.lycorp.webauthn.sample.data.remote.api.RetrofitFido2Api
+import com.linecorp.webauthn.sample.data.remote.api.RetrofitFido2Api
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -31,7 +31,8 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
-    private val BASE_URL_FIDO2 = "https://example.com"
+    private val BASE_URL_FIDO2 = "https://5d6a443b.ngrok.linecorp-dev.com"
+//    private val BASE_URL_FIDO2 = "https://example.com"
 
     private fun createOkHttpClient(): OkHttpClient {
         val cookieManager = CookieManager()
@@ -51,15 +52,14 @@ object RetrofitClient {
                     authType: String?,
                 ) {}
 
-                override fun getAcceptedIssuers(): Array<X509Certificate> {
-                    return arrayOf()
-                }
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
             }
 
         val sslContext = SSLContext.getInstance("SSL")
         sslContext.init(null, arrayOf(bypassTrustManager), SecureRandom())
 
-        return OkHttpClient.Builder()
+        return OkHttpClient
+            .Builder()
             .sslSocketFactory(sslContext.socketFactory, bypassTrustManager)
             .hostnameVerifier { _hostname, _session -> true }
             .cookieJar(JavaNetCookieJar(cookieManager))
@@ -69,7 +69,8 @@ object RetrofitClient {
 
     private fun createRetrofit(baseUrl: String): Retrofit {
         val client = createOkHttpClient()
-        return Retrofit.Builder()
+        return Retrofit
+            .Builder()
             .client(client)
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())

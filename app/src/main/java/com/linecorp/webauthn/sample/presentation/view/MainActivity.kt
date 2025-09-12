@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.presentation.view
+package com.linecorp.webauthn.sample.presentation.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -29,20 +29,22 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import jp.co.lycorp.webauthn.db.CredentialSourceStorage
-import jp.co.lycorp.webauthn.model.AttestationStatementFormat
-import jp.co.lycorp.webauthn.model.AuthenticationMethod
-import jp.co.lycorp.webauthn.model.Fido2PromptInfo
-import jp.co.lycorp.webauthn.publickeycredential.PublicKeyCredential
-import jp.co.lycorp.webauthn.rp.RelyingParty
-import jp.co.lycorp.webauthn.sample.R
-import jp.co.lycorp.webauthn.sample.data.database.RoomCredentialSourceStorage
-import jp.co.lycorp.webauthn.sample.network.Fido2RelyingPartyImpl
-import jp.co.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
-import jp.co.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModelFactory
+import com.linecorp.webauthn.db.CredentialSourceStorage
+import com.linecorp.webauthn.model.AttestationStatementFormat
+import com.linecorp.webauthn.model.AuthenticationMethod
+import com.linecorp.webauthn.model.Fido2PromptInfo
+import com.linecorp.webauthn.publickeycredential.PublicKeyCredential
+import com.linecorp.webauthn.rp.RelyingParty
+import com.linecorp.webauthn.sample.R
+import com.linecorp.webauthn.sample.data.database.RoomCredentialSourceStorage
+import com.linecorp.webauthn.sample.network.Fido2RelyingPartyImpl
+import com.linecorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
+import com.linecorp.webauthn.sample.presentation.viewmodel.Fido2ViewModelFactory
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity(), FragmentInteractionListener {
+class MainActivity :
+    AppCompatActivity(),
+    FragmentInteractionListener {
     private val viewModel by viewModels<Fido2ViewModel> {
         val rpClient: RelyingParty = Fido2RelyingPartyImpl()
         val db: CredentialSourceStorage = RoomCredentialSourceStorage.build(this)
@@ -215,7 +217,8 @@ class MainActivity : AppCompatActivity(), FragmentInteractionListener {
         fragment: Fragment,
         tag: String,
     ) {
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+            .beginTransaction()
             .replace(R.id.optionContainer, fragment, tag)
             .addToBackStack(null)
             .commit()

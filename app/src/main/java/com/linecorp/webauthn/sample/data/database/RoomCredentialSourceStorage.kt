@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.data.database
+package com.linecorp.webauthn.sample.data.database
 
 import android.content.Context
 import androidx.room.Dao
@@ -26,9 +26,9 @@ import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import jp.co.lycorp.webauthn.db.CredentialSourceStorage
-import jp.co.lycorp.webauthn.model.PublicKeyCredentialSource
-import jp.co.lycorp.webauthn.model.PublicKeyCredentialType
+import com.linecorp.webauthn.db.CredentialSourceStorage
+import com.linecorp.webauthn.model.PublicKeyCredentialSource
+import com.linecorp.webauthn.model.PublicKeyCredentialType
 import java.util.UUID
 
 @Database(
@@ -36,7 +36,9 @@ import java.util.UUID
     version = 1,
     exportSchema = false,
 )
-internal abstract class RoomCredentialSourceStorage : RoomDatabase(), CredentialSourceStorage {
+internal abstract class RoomCredentialSourceStorage :
+    RoomDatabase(),
+    CredentialSourceStorage {
     companion object {
         private var instance: RoomCredentialSourceStorage? = null
 
@@ -44,11 +46,12 @@ internal abstract class RoomCredentialSourceStorage : RoomDatabase(), Credential
             if (instance == null) {
                 synchronized(RoomCredentialSourceStorage::class) {
                     instance =
-                        Room.databaseBuilder(
-                            context,
-                            RoomCredentialSourceStorage::class.java,
-                            "fido2_database",
-                        ).build()
+                        Room
+                            .databaseBuilder(
+                                context,
+                                RoomCredentialSourceStorage::class.java,
+                                "fido2_database",
+                            ).build()
                 }
             }
             return instance!!
@@ -77,8 +80,7 @@ internal abstract class RoomCredentialSourceStorage : RoomDatabase(), Credential
         return credSourceEntityList
             .filter { entity ->
                 aaguid == null || entity.aaguid == aaguid
-            }
-            .map { entity ->
+            }.map { entity ->
                 PublicKeyCredentialSource(
                     type = entity.credType,
                     id = entity.credId,
@@ -110,9 +112,7 @@ internal abstract class RoomCredentialSourceStorage : RoomDatabase(), Credential
         credDao().increaseSignatureCounter(credId)
     }
 
-    override fun getSignatureCounter(credId: String): UInt {
-        return credDao().selectSignatureCounter(credId).toUInt()
-    }
+    override fun getSignatureCounter(credId: String): UInt = credDao().selectSignatureCounter(credId).toUInt()
 }
 
 // DAO interface
