@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.presentation.view
+package com.linecorp.webauthn.sample.presentation.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,8 +24,8 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import jp.co.lycorp.webauthn.sample.R
-import jp.co.lycorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
+import com.linecorp.webauthn.sample.R
+import com.linecorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
 
 class SignUpFragment : Fragment() {
     private val viewModel: Fido2ViewModel by activityViewModels()

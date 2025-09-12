@@ -14,13 +14,13 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.presentation.view
+package com.linecorp.webauthn.sample.presentation.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import jp.co.lycorp.webauthn.sample.R
+import com.linecorp.webauthn.sample.R
 
 class AuthenticatorSelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

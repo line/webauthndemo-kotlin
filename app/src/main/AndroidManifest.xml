@@ -17,7 +17,7 @@
         tools:replace="android:label"
         tools:targetApi="34">
 
-        <activity android:name="jp.co.lycorp.webauthn.sample.presentation.view.AuthenticatorSelectionActivity"
+        <activity android:name="com.linecorp.webauthn.sample.presentation.view.AuthenticatorSelectionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="jp.co.lycorp.webauthn.sample.presentation.view.MainActivity"
+            android:name="com.linecorp.webauthn.sample.presentation.view.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustNothing">
         </activity>

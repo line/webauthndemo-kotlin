@@ -14,7 +14,7 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample
+package com.linecorp.webauthn.sample
 
 import android.app.Application
 

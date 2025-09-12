@@ -14,15 +14,15 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.domain.remote
+package com.linecorp.webauthn.sample.domain.remote
 
-import jp.co.lycorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeInput
-import jp.co.lycorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeResult
-import jp.co.lycorp.webauthn.sample.data.remote.model.GetRegistrationChallengeInput
-import jp.co.lycorp.webauthn.sample.data.remote.model.GetRegistrationChallengeResult
-import jp.co.lycorp.webauthn.sample.data.remote.model.SendAuthenticationResponseInput
-import jp.co.lycorp.webauthn.sample.data.remote.model.SendRegistrationResponseInput
-import jp.co.lycorp.webauthn.sample.data.remote.model.SendResponseResult
+import com.linecorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeInput
+import com.linecorp.webauthn.sample.data.remote.model.GetAuthenticationChallengeResult
+import com.linecorp.webauthn.sample.data.remote.model.GetRegistrationChallengeInput
+import com.linecorp.webauthn.sample.data.remote.model.GetRegistrationChallengeResult
+import com.linecorp.webauthn.sample.data.remote.model.SendAuthenticationResponseInput
+import com.linecorp.webauthn.sample.data.remote.model.SendRegistrationResponseInput
+import com.linecorp.webauthn.sample.data.remote.model.SendResponseResult
 
 interface Fido2Api {
     suspend fun getAuthenticationChallenge(body: GetAuthenticationChallengeInput): GetAuthenticationChallengeResult

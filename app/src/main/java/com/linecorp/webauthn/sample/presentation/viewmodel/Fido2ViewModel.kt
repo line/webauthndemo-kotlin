@@ -14,21 +14,21 @@
  * under the License.
  */
 
-package jp.co.lycorp.webauthn.sample.presentation.viewmodel
+package com.linecorp.webauthn.sample.presentation.viewmodel
 
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import jp.co.lycorp.webauthn.exceptions.WebAuthnException
-import jp.co.lycorp.webauthn.model.AttestationConveyancePreference
-import jp.co.lycorp.webauthn.model.AuthenticatorSelectionCriteria
-import jp.co.lycorp.webauthn.model.Fido2PromptInfo
-import jp.co.lycorp.webauthn.model.UserVerificationRequirement
-import jp.co.lycorp.webauthn.publickeycredential.PublicKeyCredential
-import jp.co.lycorp.webauthn.rp.AuthenticationOptions
-import jp.co.lycorp.webauthn.rp.RegistrationOptions
+import com.linecorp.webauthn.exceptions.WebAuthnException
+import com.linecorp.webauthn.model.AttestationConveyancePreference
+import com.linecorp.webauthn.model.AuthenticatorSelectionCriteria
+import com.linecorp.webauthn.model.Fido2PromptInfo
+import com.linecorp.webauthn.model.UserVerificationRequirement
+import com.linecorp.webauthn.publickeycredential.PublicKeyCredential
+import com.linecorp.webauthn.rp.AuthenticationOptions
+import com.linecorp.webauthn.rp.RegistrationOptions
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -293,13 +293,12 @@ class Fido2ViewModel(
         _currentFragment.value = FRAGMENT_SIGN_IN
     }
 
-    private fun formatJson(json: String?): String {
-        return try {
+    private fun formatJson(json: String?): String =
+        try {
             val gson = GsonBuilder().setPrettyPrinting().create()
             val jsonElement = Gson().fromJson(json, Any::class.java)
             gson.toJson(jsonElement)
         } catch (e: Exception) {
             json ?: ""
         }
-    }
 }
