@@ -107,6 +107,5 @@ dependencies {
     implementation "androidx.room:room-ktx:$project.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$project.roomVersion"
 
-//    implementation group: "jp.co.lycorp.webauthn", name: "webauthn-kotlin", version: "1.1.0"
-    implementation "com.linecorp:webauthn-kotlin:1.1.2"
+    implementation "com.linecorp:webauthn-kotlin:1.1.3"
 }
