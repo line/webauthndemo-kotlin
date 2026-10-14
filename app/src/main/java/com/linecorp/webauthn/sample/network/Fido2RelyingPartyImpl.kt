@@ -39,13 +39,14 @@ class Fido2RelyingPartyImpl(
             api.getAuthenticationChallenge(
                 data,
             )
+        val publicKey = response.credentialRequestOptions.publicKey
 
         return AuthenticationData(
-            allowCredentials = response.allowCredentials,
-            challenge = response.challenge,
-            extensions = response.extensions,
-            rpId = response.rpId,
-            userVerification = UserVerificationRequirement.fromValue(response.userVerification)!!,
+            allowCredentials = publicKey.allowCredentials,
+            challenge = publicKey.challenge,
+            extensions = publicKey.extensions,
+            rpId = publicKey.rpId,
+            userVerification = UserVerificationRequirement.fromValue(publicKey.userVerification)!!,
         )
     }
 
@@ -62,31 +63,40 @@ class Fido2RelyingPartyImpl(
             api.getRegistrationChallenge(
                 data,
             )
+        val publicKey = response.credentialCreationOptions.publicKey
+
+        // The RP lists every algorithm it accepts and the library selects a single supported entry
+        // from that list, so a credential type or COSE algorithm the library has no constant for is
+        // dropped here. The library substitutes ES256 when the list it receives is empty.
+        val pubKeyCredParams =
+            publicKey.pubKeyCredParams.mapNotNull { param ->
+                val type =
+                    PublicKeyCredentialType.fromValue(param.type)
+                        ?: return@mapNotNull null
+                val alg =
+                    COSEAlgorithmIdentifier.fromValue(param.alg.toLong())
+                        ?: return@mapNotNull null
+                PublicKeyCredentialParams(type, alg)
+            }
 
         return RegistrationData(
-            attestation = AttestationConveyancePreference.fromValue(response.attestation)!!,
-            authenticatorSelection = response.authenticatorSelection,
-            challenge = response.challenge,
-            excludeCredentials = response.excludeCredentials,
+            attestation = AttestationConveyancePreference.fromValue(publicKey.attestation)!!,
+            authenticatorSelection = publicKey.authenticatorSelection,
+            challenge = publicKey.challenge,
+            excludeCredentials = publicKey.excludeCredentials,
             extensions =
                 ClientExtensionInput(),
-            pubKeyCredParams =
-                response.pubKeyCredParams.map {
-                    PublicKeyCredentialParams(
-                        PublicKeyCredentialType.fromValue(it.type)!!,
-                        COSEAlgorithmIdentifier.fromValue(it.alg.toLong())!!,
-                    )
-                },
+            pubKeyCredParams = pubKeyCredParams,
             rp =
                 PublicKeyCredentialRpEntity(
-                    id = response.rp.id,
-                    name = response.rp.name,
+                    id = publicKey.rp.id,
+                    name = publicKey.rp.name,
                 ),
             user =
                 PublicKeyCredentialUserEntity(
-                    id = response.user.id,
-                    name = response.user.name,
-                    displayName = response.user.displayName,
+                    id = publicKey.user.id,
+                    name = publicKey.user.name,
+                    displayName = publicKey.user.displayName,
                 ),
         )
     }

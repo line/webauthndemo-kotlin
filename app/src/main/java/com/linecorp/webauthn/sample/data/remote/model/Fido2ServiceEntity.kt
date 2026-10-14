@@ -29,17 +29,23 @@ data class GetAuthenticationChallengeInput(
 )
 
 data class GetAuthenticationChallengeResult(
+    var status: String,
+    var errorMessage: String,
+    var credentialRequestOptions: CredentialRequestOptions,
+)
+
+data class CredentialRequestOptions(
+    var mediation: String?,
+    var publicKey: PublicKeyCredentialRequestOptionsResult,
+)
+
+data class PublicKeyCredentialRequestOptionsResult(
     var allowCredentials: List<PublicKeyCredentialDescriptor>?,
     var challenge: String,
-    var credentialId: String,
-    var errorMessage: String,
-    var extensions: ClientExtensionInput,
     var rpId: String,
-    var sessionId: String,
-    var status: String,
     var timeout: ULong,
     var userVerification: String,
-    var cookie: String,
+    var extensions: ClientExtensionInput,
 )
 
 data class SendResponseResult(
@@ -75,17 +81,24 @@ data class GetRegistrationChallengeInput(
 )
 
 data class GetRegistrationChallengeResult(
+    var status: String,
+    var errorMessage: String,
+    var credentialCreationOptions: CredentialCreationOptions,
+)
+
+data class CredentialCreationOptions(
+    var mediation: String?,
+    var publicKey: PublicKeyCredentialCreationOptionsResult,
+)
+
+data class PublicKeyCredentialCreationOptionsResult(
     var attestation: String,
     var authenticatorSelection: AuthenticatorSelectionCriteria?,
     var challenge: String,
-    var credentialId: String,
-    var errorMessage: String,
     var excludeCredentials: List<PublicKeyCredentialDescriptor>?,
     var extensions: ClientExtensionInput,
     var pubKeyCredParams: List<PubKeyCredParams>,
     var rp: RP,
-    var sessionId: String,
-    var status: String,
     var timeout: ULong,
     var user: User,
 )
