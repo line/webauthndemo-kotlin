@@ -35,9 +35,12 @@ import com.linecorp.webauthn.model.AuthenticationMethod
 import com.linecorp.webauthn.model.Fido2PromptInfo
 import com.linecorp.webauthn.publickeycredential.PublicKeyCredential
 import com.linecorp.webauthn.rp.RelyingParty
+import com.linecorp.webauthn.sample.BuildConfig
 import com.linecorp.webauthn.sample.R
 import com.linecorp.webauthn.sample.data.database.RoomCredentialSourceStorage
+import com.linecorp.webauthn.sample.network.FakeRelyingParty
 import com.linecorp.webauthn.sample.network.Fido2RelyingPartyImpl
+import com.linecorp.webauthn.sample.network.RetrofitClient
 import com.linecorp.webauthn.sample.presentation.viewmodel.Fido2ViewModel
 import com.linecorp.webauthn.sample.presentation.viewmodel.Fido2ViewModelFactory
 import kotlinx.coroutines.launch
@@ -46,7 +49,7 @@ class MainActivity :
     AppCompatActivity(),
     FragmentInteractionListener {
     private val viewModel by viewModels<Fido2ViewModel> {
-        val rpClient: RelyingParty = Fido2RelyingPartyImpl()
+        val rpClient: RelyingParty = createRelyingParty()
         val db: CredentialSourceStorage = RoomCredentialSourceStorage.build(this)
         val authType = intent.getStringExtra("auth_type")
         val authenticationMethod: AuthenticationMethod
@@ -94,6 +97,7 @@ class MainActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.subtitle = BuildConfig.RP_BASE_URL.ifEmpty { "Fake relying party" }
 
         if (savedInstanceState == null) {
             replaceFragment(DefaultFragment(), Fido2ViewModel.FRAGMENT_DEFAULT)
@@ -105,6 +109,17 @@ class MainActivity :
         setFragment()
         setLogWindow()
     }
+
+    /**
+     * Connects to the FIDO2 server at `fido2.rpBaseUrl`, or runs [FakeRelyingParty] when it is not set.
+     * See the README for where to set it.
+     */
+    private fun createRelyingParty(): RelyingParty =
+        if (BuildConfig.RP_BASE_URL.isEmpty()) {
+            FakeRelyingParty()
+        } else {
+            Fido2RelyingPartyImpl(RetrofitClient.createFido2Api(BuildConfig.RP_BASE_URL))
+        }
 
     override fun onBackPressed() {
         val intent = Intent(this, AuthenticatorSelectionActivity::class.java)

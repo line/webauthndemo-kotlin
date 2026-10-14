@@ -31,8 +31,6 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
-    private val BASE_URL_FIDO2 = "https://example.com"
-
     private fun createOkHttpClient(): OkHttpClient {
         val cookieManager = CookieManager()
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL)
@@ -77,9 +75,13 @@ object RetrofitClient {
             .build()
     }
 
-    fun createFido2Api(): RetrofitFido2Api {
+    /**
+     * @param baseUrl URL of the FIDO2 server. The endpoints resolve relative to it, so a trailing slash
+     * is added when it is missing.
+     */
+    fun createFido2Api(baseUrl: String): RetrofitFido2Api {
         val apiClass = RetrofitFido2Api::class.java
-        val retrofit = createRetrofit(baseUrl = BASE_URL_FIDO2)
+        val retrofit = createRetrofit(baseUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/")
         return retrofit.create(apiClass)
     }
 }

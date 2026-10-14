@@ -23,6 +23,16 @@ plugins {
 
 // Removed jvmToolchain to use system Java while maintaining Java 11 compatibility
 
+// URL of the FIDO2 server, from -Pfido2.rpBaseUrl or local.properties. Empty selects FakeRelyingParty.
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withInputStream { localProperties.load(it) }
+}
+def rpBaseUrl = project.hasProperty("fido2.rpBaseUrl")
+        ? project.property("fido2.rpBaseUrl")
+        : localProperties.getProperty("fido2.rpBaseUrl", "")
+
 android {
     namespace "com.linecorp.webauthn.sample"
     compileSdkVersion project.compileSdkVersion.toInteger()
@@ -35,6 +45,11 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "com.linecorp.webauthn.sample.CustomTestRunner"
+
+        buildConfigField "String", "RP_BASE_URL", "\"${rpBaseUrl}\""
+    }
+    buildFeatures {
+        buildConfig true
     }
     signingConfigs {
         release {

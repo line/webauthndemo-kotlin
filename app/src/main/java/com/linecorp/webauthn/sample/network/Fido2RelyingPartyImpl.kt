@@ -27,7 +27,7 @@ import com.linecorp.webauthn.sample.domain.remote.Fido2Api
 import com.linecorp.webauthn.util.toBase64url
 
 class Fido2RelyingPartyImpl(
-    private val api: Fido2Api = RetrofitClient.createFido2Api(),
+    private val api: Fido2Api,
 ) : RelyingParty {
     override suspend fun getAuthenticationData(options: AuthenticationOptions): AuthenticationData {
         val data =
