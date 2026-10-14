@@ -31,8 +31,7 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 object RetrofitClient {
-    private val BASE_URL_FIDO2 = "https://5d6a443b.ngrok.linecorp-dev.com"
-//    private val BASE_URL_FIDO2 = "https://example.com"
+    private val BASE_URL_FIDO2 = "https://example.com"
 
     private fun createOkHttpClient(): OkHttpClient {
         val cookieManager = CookieManager()
