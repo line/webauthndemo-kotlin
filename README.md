@@ -9,6 +9,7 @@ Welcome to the WebAuthnDemo Kotlin! This sample application demonstrates how to 
 - Demonstrates the use of `Authenticator`, including 4 different types.
 - Includes examples of registering and authenticating credentials.
 - Provides an example implementation of the `RelyingParty` interface.
+- Runs without a FIDO2 server by default, using a fake `RelyingParty` inside the app.
 
 ## Prerequisites
 
@@ -77,9 +78,9 @@ Or you can use the command line:
 $ ./gradlew publishToMavenLocal
 ```
 
-### 5. Launch a WebAuthn server.
+### 5. Launch a WebAuthn server (optional).
 
-We use the FIDO2 server [here](https://github.com/line/line-fido2-server) to run the sample application. Please refer to the [README](https://github.com/line/line-fido2-server/blob/main/README.md#how-to-run) for instructions on how to run the server.
+The app runs without a server unless one is configured in the next step. To test against a server, we use the FIDO2 server [here](https://github.com/line/line-fido2-server). Please refer to the [README](https://github.com/line/line-fido2-server/blob/main/README.md#how-to-run) for instructions on how to run the server.
 
 When setting up the server, you need to register the `origin` for your Android application. The `origin` is derived from the `facetId` as described in the [FIDO AppID and Facet Specification](https://fidoalliance.org/specs/common-specs/fido-appid-and-facets-v2.1-ps-20220523.html#processing-rules-for-appid-and-facetid-assertions) for the Android case.
 
@@ -118,16 +119,26 @@ tr -d '\n'
 
 For instructions on creating `keystore.jks` / `keystore.properties` for release mode, please refer to the [Additional configuration](#additional-configuration) section below.
 
-### 6. Change the domain of relying party in [`RetrofitClient.kt`](./app/src/main/java/jp/co/lycorp/webauthn/sample/network/RetrofitClient.kt).
+### 6. Choose the relying party.
 
 1. Open `webauthndemo-kotlin` in Android Studio.
-2. Configure **Gradle JVM** to use Java 21 in Preferences → Build, Execution, Deployment → Build Tools → Gradle
-3. Open [`RetrofitClient.kt`](./app/src/main/java/jp/co/lycorp/webauthn/sample/network/RetrofitClient.kt) file.
-4. Replace the domain `"https://example.com"` with the server domain you want to test.
+2. Configure **Gradle JVM** to use Java 21 in Preferences > Build, Execution, Deployment > Build Tools > Gradle
+3. To connect to a FIDO2 server, set its URL as `fido2.rpBaseUrl` in `local.properties` in the root directory of the project. Leave it unset, or comment the line out with `#`, to run without a server.
 
-```kotlin
-private val BASE_URL_FIDO2 = "https://example.com"  <-  replace here
+```properties
+fido2.rpBaseUrl=https://your-fido2-server.example.com
 ```
+
+The property can also be passed for a single build, which takes precedence over `local.properties`. An empty value runs without a server even when `local.properties` sets a URL:
+
+```bash
+$ ./gradlew installDebug -Pfido2.rpBaseUrl=https://your-fido2-server.example.com
+$ ./gradlew installDebug -Pfido2.rpBaseUrl=
+```
+
+`local.properties` is not checked in, so the server URL stays out of version control. The value is read at build time; sync the project with Gradle files and reinstall the app after changing it. The title bar of the main screen shows the server URL, or `Fake relying party` when none is set.
+
+Without a server URL, the app uses [`FakeRelyingParty`](./app/src/main/java/com/linecorp/webauthn/sample/network/FakeRelyingParty.kt). It issues a challenge for each registration and authentication and checks that the response carries it, so every ceremony runs on the device with no network connection. It does not verify attestation or signatures; use it to try the SDK, not as a substitute for a server. Credentials registered with it are bound to its own relying party ID and are not offered to a server.
 
 ### 7. Install and run the application on your android device:
 
